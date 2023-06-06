@@ -29,3 +29,5 @@ Route::get('reset-password/{token}', [ResetPasswordController::class, 'showReset
 // Route for submitting the reset password form
 Route::post('reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
 
+Route::resource('categories', 'CategoryController');
+

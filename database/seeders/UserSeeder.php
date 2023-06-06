@@ -30,6 +30,7 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => bcrypt('password'),
             'sex' => SexeEnum::Male->value,
+        ]);
 
         User::create([
             'name' => "Lidelle",

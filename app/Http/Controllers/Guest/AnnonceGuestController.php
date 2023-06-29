@@ -8,29 +8,13 @@ use Illuminate\Http\Request;
 
 class AnnonceGuestController extends Controller
 {
-    public function listAnnonces(Request $request)
+
+    public function showAd($id)
     {
-        $limit = $request->get('limit', 15);
-        $annonces = Annonce::where('is_blocked', false)->paginate($limit);
-        return response()->json($annonces);
-    }
-
-    public function detailsAnnonce(Annonce  $annonce)
-    {
-    }
-
-    public function update()
-    {
-    }
-
-    public function view()
-    {
-    }
-
-
-
-
-    public function delete()
-    {
+        $name = "Ad Detail";
+        $head = "Dashboard";
+        $annonces = Annonce::orderBy('level', 'desc')->take(4)->get();
+        $ad = Annonce::findorfail($id);
+        return view('guest.layouts.pages.ad-detail',  compact('name', 'head', 'ad', 'annonces'));
     }
 }

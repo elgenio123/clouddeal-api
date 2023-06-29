@@ -9,6 +9,7 @@ use App\Http\Controllers\Authenticate\RegionController;
 use App\Http\Controllers\Authenticate\VilleController;
 use App\Http\Controllers\Guest\RegionGuestController;
 use App\Http\Controllers\Guest\VilleGuestController;
+use App\Http\Controllers\Guest\ContactsGuestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,9 @@ Route::prefix('auth')->group(function () {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('boost/{annonce}', [BoostController::class, 'store']);
+
+    Route::post('commentaires/{annonce}', [CommentaireController::class, 'store']);
+
     Route::prefix('annonce')->group(function () {
         Route::get('/', [AnnonceController::class, 'index']);
         Route::post('/', [AnnonceController::class, 'store']);
@@ -64,4 +68,9 @@ Route::prefix('guest')->group(function () {
     });
     Route::get('region/', [RegionGuestController::class, 'listRegions']);
     Route::get('town/', [VilleGuestController::class, 'listVilles']);
+
+    Route::post('/contact', [ContactsController::class, 'store'])->name('contact.store');
+
 });
+
+

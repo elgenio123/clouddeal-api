@@ -24,7 +24,7 @@ window.addEventListener('alpine:init', () => {
                 .then(data => {
                     // this.selectedDiscussion = this.discussions.find(discussion => discussion.id === 1);
                     this.messages = data.data;
-                    console.log(this.messages);
+                    console.log(data);
                 })
                 .catch(error =>{
                     console.error(error);

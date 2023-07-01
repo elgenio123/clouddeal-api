@@ -10,28 +10,26 @@ window.addEventListener('alpine:init', () => {
                 .then(data => {
 
                     this.discussions = data.data;
-                    this.messages = this.discussions.find(messages =>discussion.id === 2);
 
                     console.log(this.discussions);
-                    console.log(this.messages);
                 })
                 .catch(error => {
                     console.error(error);
                 });
         },
-        // fetchMessages(){
+        fetchMessages(){
 
-        //     fetch('/chat/discussion/${1}/messages')
-        //         .then(response=>response.json())
-        //         .then(data => {
-        //             this.selectedDiscussion = this.discussions.find(discussion => discussion.id === 1);
-        //             this.messages = data.data;
-        //             console.log(this.messages);
-        //         })
-        //         .catch(error =>{
-        //             console.error(error);
-        //         })
-        // },
+            fetch('/chat/${2}')
+                .then(response=>response.json())
+                .then(data => {
+                    // this.selectedDiscussion = this.discussions.find(discussion => discussion.id === 1);
+                    this.messages = data.data;
+                    console.log(this.messages);
+                })
+                .catch(error =>{
+                    console.error(error);
+                })
+        },
 
     }));
 });
@@ -41,18 +39,6 @@ window.addEventListener('alpine:init', () => {
         messages: [],
         isEmpty: 'false',
 
-        fetchMessages(){
-
-            fetch('/chat/discussion/messages/${1}')
-                .then(response=>response.json())
-                .then(data => {
-                    this.messages = data.data;
-                    console.log(this.messages);
-                })
-                .catch(error =>{
-                    console.error(error);
-                })
-        },
         // fetchMessages() {
         //     const messagesData = [
         //         {

@@ -101,7 +101,7 @@ Route::get('/blog-details', function () {
 Route::name('chat.')->prefix('chat')->group(function () {
     Route::get('/', [DiscussionController::class, 'index'])->name('index');
     Route::get('{annonce}', [DiscussionController::class, 'ListDiscussion']);
-    Route::get('/messages/{discussionId}', [MessageController::class, 'getMessages']);
+    Route::get('{discussionId}', [MessageController::class, 'getMessages']);
 
 });
 

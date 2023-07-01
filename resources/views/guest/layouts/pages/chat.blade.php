@@ -7,50 +7,7 @@
 
 @section('content')
     @include('guest.includes.navbanner')
-    <style>
-        /* Barre de défilement */
-::-webkit-scrollbar {
-  width: 8px; /* Largeur de la barre de défilement */
-}
 
-/* Fond de la barre de défilement */
-::-webkit-scrollbar-track {
-  background-color: #f1f1f1; /* Couleur de fond */
-}
-
-/* Curseur de la barre de défilement */
-::-webkit-scrollbar-thumb {
-  background-color: #888; /* Couleur du curseur */
-  border-radius: 4px; /* Bordure arrondie du curseur */
-}
-
-/* Curseur de la barre de défilement au survol */
-::-webkit-scrollbar-thumb:hover {
-  background-color: #555; /* Couleur du curseur au survol */
-}
-
-/* Pseudo-élément en haut de la barre de défilement */
-::-webkit-scrollbar-button:start:decrement,
-::-webkit-scrollbar-button:end:increment {
-  display: none; /* Masquer les boutons de défilement */
-}
-
-        .list-discussion {
-            height: 400px;
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-        .list-message {
-            height: 400px;
-
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-        .list-item {
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
-        }
-    </style>
     <div class="container">
         <div class="row clearfix">
             <div class="col-lg-12">

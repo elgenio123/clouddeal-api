@@ -96,3 +96,6 @@
         </div>
     </div>
 @endsection
+@section('script')
+    <script src="{{ asset('assets/custom/js/chat.js') }}"></script>
+@endsection

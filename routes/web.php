@@ -34,14 +34,15 @@ Route::prefix('clouddeal')->group(function () {
     Route::get('/contact', [ContactController::class, 'index'])->name('contact');
     Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
     Route::prefix('allAds')->group(function () {
-        Route::get('/', function () {
-            return view('guest.layouts.pages.all-ads',  ['name' => 'Dashboard',  'head' => 'Dashboard']);
-        })->name('dashboard');
+        Route::get('/', [AnnonceGuestController::class, 'index'])->name('dashboard.index');
+        Route::get('/ads', [AnnonceGuestController::class, 'paginatedAds'])->name('dashboard.ads');
         Route::get('/ad-detail/{id}', [AnnonceGuestController::class, 'showAd'])->name('dashboard.singe-ad');
-
         Route::get('/ad-list', function () {
             return view('guest.layouts.pages.ad',  ['name' => 'Ad List',  'head' => 'Dashboard']);
         })->name('dashboard.ad-list');
+        Route::prefix('search')->group(function () {
+             Route::get('/',[ AnnonceGuestController::class, 'search']);//->name('search.category')
+        });
     });
 });
 

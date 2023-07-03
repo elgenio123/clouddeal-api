@@ -29,7 +29,7 @@ class Annonce extends Model
         'category_id'
     ];
 
-    protected $appends = ['files', 'format_price', 'image_path', 'url_detail'];
+    protected $appends = ['files', 'format_price', 'image_pah'];
 
     public function payment(): BelongsTo
     {
@@ -67,15 +67,10 @@ class Annonce extends Model
         return toMoney($this->price);
     }
 
-    function getImagePathAttribute()
+    function getImagePahAttribute()
     {
         return url($this->image);
     }
-    public function getUrlDetailAttribute()
-    {
-        return route('dashboard.singe-ad', $this->id);
-    }
-
 
     public function user(): BelongsTo
     {

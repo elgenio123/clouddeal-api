@@ -17,7 +17,6 @@
                     this.ads = (this.ads || []).concat(data.allAds.data);
                     this.page++;
                     this.totalPages = data.allAds.last_page;
-                    console.log(this.ads);
                 })
                 .catch(error => {
                     console.error(error);
@@ -34,7 +33,7 @@
                             <div class="product-icon flex-style">
                                 <ul>
                                     <li>
-                                    <li><a :href="ad.url_detail"><i class="fa fa-eye"></i></a></li>
+                                    <li><a href="@{{ route('dashboard.singe-ad', ['id' => ad.id]) }}"><i class="fa fa-eye"></i></a></li>
                                     <li><a href="{{ route('chat.index') }}"><i class="fa fa-send"></i></a></li>
                                 </ul>
                             </div>
@@ -48,11 +47,11 @@
                 </li>
             </template>
         </template>
-        <li x-show="page <= totalPages" class="col-12 text-center" style="cursor: pointer">
+        <li x-show="page <= totalPages" class="col-12 text-center">
             <a class="loadmore-btn" x-on:click="loadAds">Load More</a>
         </li>
-        <li x-show="page > totalPages" class="col-12 text-center" style="cursor: pointer">
-            <a class="loadmore-btn" href="{{ route('dashboard') }}">Go to product pages</a>
+        <li x-show="page > totalPages" class="col-12 text-center">
+            <a class="loadmore-btn" href="{{ route('dashboard.ad-list') }}">Go to product pages</a>
         </li>
     </ul>
 </div>

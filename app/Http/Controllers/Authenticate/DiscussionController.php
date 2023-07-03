@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Authenticate;
 use App\Http\Controllers\Controller;
 use App\Models\Annonce;
 use App\Models\Discussion;
+use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -20,6 +21,7 @@ class DiscussionController extends Controller
     public function ListDiscussion(Request $request, Annonce $annonce)
     {
         $discussions = $annonce->discussions()->with('messages')->paginate(5);
+        //dd($discussions);
         return response()->json($discussions);
     }
 
@@ -56,5 +58,12 @@ class DiscussionController extends Controller
 
     public function delete()
     {
+    }
+
+    public function getMessages(Request $request, Discussion $discussion)
+    {
+        $messages = $discussion->messages()->paginate(5);
+        //dd($messages);
+        return response()->json($messages);
     }
 }

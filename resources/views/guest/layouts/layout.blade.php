@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/mystyle.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
     @yield('style')
 
@@ -28,34 +29,29 @@
     </div>
 
     <div class="search-area flex-style">
-        @include('user.includes.search')
+        @include('guest.includes.search')
     </div>
 
     <header class="header-area">
         <div class="header-top bg-2">
-            @include('user.layouts.menu.header-top')
+            @include('guest.layouts.menu.first-header')
         </div>
         <div class="header-bottom">
-            @include('user.layouts.menu.header-bottom')
+            @include('guest.layouts.menu.second-header')
         </div>
     </header>
     <div class="modal fade" id="exampleModalCenter" tabindex="-1">
-        @include('user.includes.modal')
+        @include('guest.includes.modal')
     </div>
     @yield('content')
 
     <section class="social-newsletter-section">
-        @include('user.includes.landing-page.socials')
+        @include('guest.includes.landing-page.socials')
     </section>
 
     <div class="footer-area">
-
-        <div class="footer-top">
-            @include('user.layouts.footer.footer-top')
-        </div>
-
         <div class="footer-bottom">
-            @include('user.layouts.footer.footer-top')
+            @include('guest.layouts.footer')
         </div>
 
     </div>
@@ -74,8 +70,11 @@
     <script src="{{ asset('assets/js/mailchimp.js') }}"></script>
     <script src="{{ asset('assets/js/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('assets/js/scripts.js') }}"></script>
-    <script src="{{ asset('assets/custom/js/chat') }}"></script>
-
+    <script src="{{ asset('assets/js/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('assets/js/myscript.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="{{ asset('assets/custom/js/chat.js') }}"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.6.1/dist/cdn.min.js"></script>
     @yield('script')
 
 </body>

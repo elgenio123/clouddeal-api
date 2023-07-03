@@ -11,8 +11,8 @@
     <div class="container">
         <div class="row clearfix">
             <div class="col-lg-12">
-                <div class="card chat-app" x-data="chatComponent" x-init="fetchDiscussions()">
-                    <div id="plist" class="people-list">
+                <div class="card chat-app">
+                    <div id="plist" class="people-list" x-data="chatComponent" x-init="fetchDiscussions()">
                         <div class="input-group">
                             <input type="text"  class="form-control" placeholder="Search...">
                             <div class="input-group-prepend">
@@ -20,16 +20,14 @@
                             </div>
 
                         </div>
-                        <ul class="list-unstyled chat-list mt-2 mb-0" >
-
-                            <div class="list-discussion">
-                                <template x-for="discussion in discussions" >
-                                    <div class="list-item">
-                                        <li class="clearfix" @click="discussionId = discussion.id" >
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">
-                                            <div class="about">
-                                                <div class="name">
-                                                    <span x-text="discussion.slug"  ></span>
+                        <ul class="list-unstyled chat-list mt-2 mb-0">
+                            {{-- <template x-for="discussion in discussions" :key="discussion.id">
+                            <li class="clearfix"
+                                x-on:click="openDiscussion === discussion.id ? openDiscussion = null : openDiscussion = discussion.id">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">
+                                <div class="about">
+                                    <div class="name">
+                                        <h3 x-text="discussion.slug"></h3>
 
                                                 </div>
                                                 <div class="status">
@@ -62,37 +60,14 @@
 
                             </div>
                         </div>
-
-                            <div class="chat-history" x-data = "chatComponet" x-init="fetchMessages(discussionId)">
+                        @isset($discussion)
+                            <div class="chat-history">
                                 <ul class="m-b-0">
-                                    <div class="list-message">
-                                    <template  x-for="message in messages" :key="message.id">
-
-                                            <li class="clearfix" :class="{'text-right': message.sender === 'user', 'text-left': message.sender === 'other'}">
-
-                                                <div class="message-data text-right">
-                                                    <span x-show="message.sender === 'user'" class="message-data-time">12:20</span>
-                                                    <img x-show="message.sender === 'user'" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
-
-                                                </div>
-                                                <div class="message-data text-left">
-                                                    <img x-show="message.sender === 'other'"  src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">
-                                                    <span x-show="message.sender === 'other'" class="message-data-time">12:15</span>
-                                                </div>
-                                                <div class="message other-message">
-                                                    <span x-text = "message.content"></span>
-                                                </div>
-                                            </li>
-²                                           <h1 x-text="message.content"></h1>
-
-                                    </template>
-                                </div>
-
-
-
-                                        {{-- <li class="clearfix">
-                                            <div class="message-data text-right">
-                                                <span class="message-data-time"</span>
+                                    @foreach ($discussion->messages as $message)
+                                        <li class="clearfix">
+                                            <div class="message-data {{ $message->user_id === 2 ? 'text-right' : '' }}">
+                                                <span
+                                                    class="message-data-time">{{ $message->created_at->format('h:i A, M d') }}</span>
                                                 <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
                                             </div>
                                             <div class="message other-message">

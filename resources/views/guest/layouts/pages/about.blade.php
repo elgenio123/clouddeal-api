@@ -44,6 +44,7 @@
                                 @endif
                                 <div class="col-md-4 p-2">
                                     <div class="card border-0 p-1">
+
                                         <img src="{{ $images[$i] }}" class="card-img-top rounded-circle p-1 bg-danger"
                                             alt="...">
                                         <div class="card-body text-left">

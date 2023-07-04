@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
 use App\Models\Annonce;
-use App\Http\Controllers\Signal;
+use App\Models\Signal;
 use Illuminate\Http\Request;
 
 class SignalGuestController extends Controller

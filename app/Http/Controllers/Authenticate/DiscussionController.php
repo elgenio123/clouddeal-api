@@ -59,9 +59,9 @@ class DiscussionController extends Controller
     {
     }
 
-    public function getMessages(Request $request, $id)
+    public function getMessages(Request $request, Discussion $discussion)
     {
-        $discussion = Discussion::findOrFail($id);
+
         $messages = $discussion->messages;
         //dd($messages);
         return response()->json($messages);

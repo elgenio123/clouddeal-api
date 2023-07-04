@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Authenticate;
 use App\Http\Controllers\Controller;
 use App\Models\Annonce;
 use App\Models\Discussion;
-use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -60,9 +59,10 @@ class DiscussionController extends Controller
     {
     }
 
-    public function getMessages(Request $request, Discussion $discussion)
+    public function getMessages(Request $request, $id)
     {
-        $messages = $discussion->messages()->paginate(5);
+        $discussion = Discussion::findOrFail($id);
+        $messages = $discussion->messages;
         //dd($messages);
         return response()->json($messages);
     }

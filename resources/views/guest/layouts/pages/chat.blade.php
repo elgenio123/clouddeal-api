@@ -25,12 +25,12 @@
                             <div class="list-discussion">
                                 <template x-for="discussion in discussions" :key="discussion.id" >
                                     <div class="list-item">
-                                        <li class="clearfix" >
+                                        <li class="clearfix" x-on:click="currentDiscussion = discussion.id">
                                             <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">
                                             <div class="about">
                                                 <div class="name">
                                                     <span x-text="discussion.slug" ></span>
-                                                
+
 
                                                 </div>
                                                 <div class="status">
@@ -64,12 +64,12 @@
                             </div>
                         </div>
 
-                            <div class="chat-history" x-data = "chatComponet">
+                            <div class="chat-history">
                                 <ul class="m-b-0">
                                     <div class="list-message">
                                     <template  x-for="message in messages" :key="message.id">
 
-                                            {{-- <li class="clearfix" :class="{'text-right': message.sender === 'user', 'text-left': message.sender === 'other'}">
+                                            <li class="clearfix" :class="{'text-right': message.sender === 'user', 'text-left': message.sender === 'other'}">
 
                                                 <div class="message-data text-right">
                                                     <span x-show="message.sender === 'user'" class="message-data-time">12:20</span>
@@ -83,7 +83,7 @@
                                                 <div class="message other-message">
                                                     <span x-text = "message.content"></span>
                                                 </div>
-                                            </li> --}}
+                                            </li>
 ²                                           <h1 x-text="message.content"></h1>
 
                                     </template>

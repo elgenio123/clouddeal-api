@@ -9,7 +9,7 @@ use App\Http\Controllers\Guest\ContactController;
 
 use App\Http\Controllers\Guest\AboutGuestController;
 use App\Http\Controllers\Authenticate\DiscussionController;
-
+use App\Models\Discussion;
 
 /*
 |--------------------------------------------------------------------------
@@ -102,7 +102,7 @@ Route::get('/blog-details', function () {
 Route::name('chat.')->prefix('chat')->group(function () {
     Route::get('/', [DiscussionController::class, 'index'])->name('index');
     Route::get('{annonce}', [DiscussionController::class, 'ListDiscussion']);
-    Route::get('/messages/{discussion}', [MessageController::class, 'getMessages']);
+    Route::get('/messages/{discussion}', [DiscussionController::class, 'getMessages']);
 
 });
 

@@ -242,6 +242,15 @@
 .fa-search{
     width: 20px;
 }
+.message-input {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
         /* Barre de défilement */
         ::-webkit-scrollbar {
             width: 8px; /* Largeur de la barre de défilement */

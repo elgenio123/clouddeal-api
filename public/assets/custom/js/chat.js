@@ -5,11 +5,13 @@ window.addEventListener('alpine:init', () => {
         messages: [],
         discussionMessage: [],
         currentDiscussion: null,
+        discussionSlug: '',
         searchQuery: '',
+        newMessage: '',
         filteredDiscussions: [],
 
         fetchDiscussions() {
-            fetch(`/chat/${2}`)
+            fetch(`/chat/${10}`)
                 .then(response => response.json())
                 .then(data => {
 
@@ -18,6 +20,7 @@ window.addEventListener('alpine:init', () => {
                         //  this.messages = this.discussions[this.currentDiscussion].messages;
                         this.searchDiscussions();
                         this.fetchMessages(this.currentDiscussion);
+                        this.sendMessage(this.currentDiscussion);
                     }
                 })
                 .catch(error => {
@@ -51,32 +54,45 @@ window.addEventListener('alpine:init', () => {
         },
         selectDiscussion(discussionId) {
             this.currentDiscussion = discussionId;
+            this.discussionSlug=this.discussions.find(discussion =>discussion.id ===this.currentDiscussion).slug;
             this.fetchMessages(discussionId);
         },
         searchDiscussions() {
             this.filteredDiscussions = this.discussions.filter(discussion => {
-              return discussion.slug.toLowerCase().includes(this.searchQuery.toLowerCase());
+                return discussion.slug.toLowerCase().includes(this.searchQuery.toLowerCase());
             });
-          },
+        },
 
-          formatTimestamp(created_at) {
+        formatTimestamp(created_at) {
             const date = new Date(created_at);
             const options = { /*year: 'numeric', month: 'numeric', day: 'numeric', */hour: 'numeric', minute: 'numeric', second: 'numeric' };
             return date.toLocaleString('fr-FR', options);
-          },
-          sendMessage() {
+        },
+        sendMessage(currentDiscussion) {
             if (this.newMessage.trim() !== '') {
-              const message = {
-                content: this.newMessage,
-                user: currentUser, // Utilisateur courant
-                createdAt: new Date().toISOString() // Date d'envoi du message
-              };
+                const message = {
+                    content: this.newMessage,
+                    userId: 1,
+                    discussionId: this.selectedDiscussion.id
+                };
 
-              this.messages.push(message);
 
-              this.newMessage = '';
+                fetch(`/chat/messages/send/` + currentDiscussion, {
+                    method: 'POST',
+
+                    body: JSON.stringify(message)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Réponse du backend contenant le message enregistré
+                        this.messages.push(data);
+                        this.newMessage = '';
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
             }
-          }
+        }
 
 
 

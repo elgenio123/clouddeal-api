@@ -103,6 +103,7 @@ Route::name('chat.')->prefix('chat')->group(function () {
     Route::get('/', [DiscussionController::class, 'index'])->name('index');
     Route::get('{annonce}', [DiscussionController::class, 'ListDiscussion']);
     Route::get('/messages/{discussion}', [DiscussionController::class, 'getMessages']);
+    Route::post('/messages/send/{discussion}', [DiscussionController::class, 'createMessage']);
 
 });
 

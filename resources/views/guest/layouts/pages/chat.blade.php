@@ -49,9 +49,9 @@
                 <div class="chat">
                     <div class="chat-header clearfix">
                         <div class="row">
-                            <div class="col-lg-6" >
+                            <div class="col-lg-6">
                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-                                    <img x-show="discussionSlug !== null" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">
+                                    <img x-show="currentDiscussion == !null" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">
                                 </a>
                                 <div class="chat-about">
 
@@ -69,58 +69,44 @@
                             <div class="list-message">
                                 <template x-for="message in messages" :key="message.id">
 
-                                    <li class="clearfix" :class="{ 'text-right': message.sender === 'user', 'text-left': message.sender ==='other' }">
+                                    <li class="clearfix" :class="{ 'text-right': message.sender === currentUser, 'text-left': message.sender === !currentUser }">
 
                                         <div class="message-data text-right">
                                             <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
                                             <span class="message-data-time" x-text="formatTimestamp(message.created_at)"></span>
-                                            <span x-show="message.sender === 'user'" class="message-data-time" x-text="formatTimestamp(message.created_at)">12:20</span>
-                                            <img x-show="message.sender === 'user'" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
+                                            <span x-show="message.sender === currentUser" class="message-data-time" x-text="formatTimestamp(message.created_at)">12:20</span>
+                                            <img x-show="message.sender === currentUser" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
 
                                         </div>
                                         <div class="message-data text-left">
-                                            <img x-show="message.sender === 'other'" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">
-                                            <span x-show="message.sender === 'other'" class="message-data-time">12:15</span>
+                                            <img x-show="message.sender === !currentUser" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">
+                                            <span x-show="message.sender === !currentUser" class="message-data-time">12:15</span>
                                         </div>
-                                        <div class="message other-message text-right">
+                                        <div class="message other-messages text-right">
                                             <span x-text="message.content">
-                                                <span x-text="formatTimestamp(message.created_at)"></span>
                                             </span>
                                         </div>
                                     </li>
-
+{{-- Chat reactive Comment le faire  --}}
 
                                 </template>
                             </div>
-
-
-
-                            <li class="clearfix">
-                                            <div class="message-data text-right">
-                                                <span class="message-data-time"></span>
-                                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
-                                            </div>
-                                            <div class="message other-message text-right">
-                                                {{-- {{ $message->content }} --}}
-                    </div>
-                    </li>
-                    <div class="chat-message clearfix">
-                        <div class="input-group mb-0">
-                            <div class="input-group-prepend" x-show="selectedDiscussion == null">
-                                <input type="text" x-model="newMessage" class="message-input" placeholder="Enter text here...">
-                                <span class="input-group-text"><i class="fa fa-send" x-on:click="sendMessage()"></i></span>
+                            <div class="chat-message clearfix">
+                                <div class="input-group mb-0" x-show="currentDiscussion == !null">
+                                    <input type="text" x-model="newMessage" class="message-input" placeholder="Enter text here...">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-send" x-on:click="sendMessage(currentDiscussion)"></i></span>
+                                    </div>
+                                </div>
                             </div>
-                            {{-- <input type="hidden"  name="discussion_id" value="Entrez votre texte"> --}}
-                        </div>
                     </div>
+                    </ul>
+
+
+
                 </div>
-                </ul>
-
-
-
             </div>
         </div>
     </div>
-</div>
 </div>
 @endsection

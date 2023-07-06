@@ -165,7 +165,12 @@
 }
 
 .chat .chat-history .other-message:after {
-    border-bottom-color: #e8f1f3;
+    border-bottom-color: #f3f7f8;
+    left: 93%
+}
+
+.chat .chat-history .other-messages:before {
+    border-bottom-color: #f3f7f8;
     left: 93%
 }
 

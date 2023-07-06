@@ -6,18 +6,18 @@ window.addEventListener('alpine:init', () => {
         discussionMessage: [],
         currentDiscussion: null,
         discussionSlug: '',
+        currentUser: 1,
         searchQuery: '',
         newMessage: '',
         filteredDiscussions: [],
 
         fetchDiscussions() {
-            fetch(`/chat/${10}`)
+            fetch(`/chat/${2}`)
                 .then(response => response.json())
                 .then(data => {
 
                     this.discussions = data.data;
                     if (this.discussions.length > 0) {
-                        //  this.messages = this.discussions[this.currentDiscussion].messages;
                         this.searchDiscussions();
                         this.fetchMessages(this.currentDiscussion);
                         this.sendMessage(this.currentDiscussion);
@@ -38,9 +38,6 @@ window.addEventListener('alpine:init', () => {
                 .then(data => {
                     console.log(data);
                     this.messages = data;
-
-                    // this.selectedDiscussion= this.discussionMessage.find(discussion => discussion.id === currentDiscussion);
-                    // this.messages = this.selectedDiscussion.messages;
                     console.log(this.messages);
                     console.log('End of fetch disccusions');
                 })
@@ -65,7 +62,7 @@ window.addEventListener('alpine:init', () => {
 
         formatTimestamp(created_at) {
             const date = new Date(created_at);
-            const options = { /*year: 'numeric', month: 'numeric', day: 'numeric', */hour: 'numeric', minute: 'numeric', second: 'numeric' };
+            const options = { /*year: 'numeric', month: 'numeric', day: 'numeric', */hour: 'numeric', minute: 'numeric' /*,second: 'numeric'*/ };
             return date.toLocaleString('fr-FR', options);
         },
         sendMessage(currentDiscussion) {
@@ -77,11 +74,7 @@ window.addEventListener('alpine:init', () => {
                 };
 
 
-                fetch(`/chat/messages/send/` + currentDiscussion, {
-                    method: 'POST',
-
-                    body: JSON.stringify(message)
-                })
+                fetch(`/chat/messages/send/` + currentDiscussion)
                     .then(response => response.json())
                     .then(data => {
                         // Réponse du backend contenant le message enregistré

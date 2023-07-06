@@ -78,15 +78,9 @@ class AuthController extends Controller
             $user = User::where('email', $request->email)->first();
             $user->update(['is_online' => true]);
 
-            return response()->json([
-                'user_id' => $user->id,
-                'token' => $user->createToken("API TOKEN")->plainTextToken
-            ], 200);
+            return redirect()->route('admin');
         } catch (\Throwable $th) {
-            return response()->json([
-                'status' => false,
-                'message' => $th->getMessage()
-            ], 500);
+            return redirect()->back()->withErrors(['message' => 'Une erreur s\'est produite lors de la connexion.']);
         }
     }
     public function logout(Request $request)
@@ -102,6 +96,9 @@ class AuthController extends Controller
             'status' => true,
             'message' => 'Successfully logged out.',
         ], 200);
+    }
+    public function viewLogin(Request $request){
+        return view('guest.auth.login');
     }
 
 }

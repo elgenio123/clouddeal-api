@@ -9,7 +9,7 @@ use App\Http\Controllers\Guest\ContactController;
 
 use App\Http\Controllers\Guest\AboutGuestController;
 use App\Http\Controllers\Authenticate\DiscussionController;
-use App\Models\Discussion;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -109,7 +109,7 @@ Route::name('chat.')->prefix('chat')->group(function () {
 
 
 
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::post('/discussions/{annonce}', [DiscussionController::class, 'store'])->name('discussions.store');

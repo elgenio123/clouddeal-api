@@ -5,11 +5,10 @@
 @endsection
 
 
-@section('content')
-    @include('user.includes.breadcumb')
+{{-- @section('content')
+     @include('user.includes.breadcumb')
     @yield("auth")
-@endsection
+@endsection --}}
 
-@section("script")
-    <script src="{{asset('assets/js/validation.js')}}"></script>
-@endsection
+{{-- @section("script")
+@endsection --}}

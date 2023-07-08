@@ -18,6 +18,8 @@ window.addEventListener('alpine:init', () => {
 
                     this.discussions = data.data;
                     if (this.discussions.length > 0) {
+                        this.currentDiscussion = this.discussions[0].id;
+                        this.discussionSlug = this.discussions.find(discussion => discussion.id === this.currentDiscussion).slug;
                         this.searchDiscussions();
                         this.fetchMessages(this.currentDiscussion);
                         this.sendMessage(this.currentDiscussion);

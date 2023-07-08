@@ -6,39 +6,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Cloud Deal</title>
+    @vite(['resources/js/app.js'])
     <link rel="icon" href="{{ asset('favicon.ico') }}">
     <link rel="stylesheet" href="{{ asset('admin-assets/components/bootstrap/dist/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin-assets/components/bootstrap/dist/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin-assets/components/bootstrap-daterangepicker/daterangepicker.css') }}">
     <link rel="stylesheet" href="{{ asset('admin-assets/components/OwlCarousel2/dist/assets/owl.carousel.css') }}">
     <link rel="stylesheet" href="{{ asset('admin-assets/components/OwlCarousel2/dist/assets/owl.theme.default.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('admin-assets/components/c3/c3.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin-assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('admin-assets/css/skin_color.css') }}">
+
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('admin-assets/custom/css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     @yield('style')
 </head>
 
 <body>
+    @include('admin.authentication.layouts.menus.header')
 
-    <div class="wrapper">
+    <div class="wrapper" style="display: flex">
+       <aside class="main-sidebar">
+            @include('admin.authentication.layouts.menus.aside')
+        </aside>
 
-        @include('admin.authentication.layouts.menus.header')
-        @include('admin.authentication.layouts.menus.aside')
-
-        <div class="content-wrapper">
-            @yield('body')
-        </div>
-
-
-        @include('admin.authentication.layouts.menus.footer')
+       <div class="content-wrapper">
+            <div class="container-full">
+                @yield('body')
+            </div>
+       </div>
 
     </div>
-
-    @yield('script')
-
+    @include('admin.authentication.layouts.menus.footer')
     <!-- js -->
+
     <script src="{{ asset('admin-assets/components/jquery-3.3.1/jquery-3.3.1.js') }}"></script>
     <script src="{{ asset('admin-assets/components/screenfull/screenfull.js') }}"></script>
     <script src="{{ asset('admin-assets/components/popper/dist/popper.min.js') }}"></script>
+    <script src="{{ asset('admin-assets/components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('admin-assets/components/bootstrap/dist/js/bootstrap.js') }}"></script>
     <script src="{{ asset('admin-assets/components/jquery-slimscroll/jquery.slimscroll.js') }}"></script>
     <script src="{{ asset('admin-assets/components/fastclick/lib/fastclick.js') }}"></script>
@@ -52,11 +58,18 @@
     <script src="{{ asset('admin-assets/lib/4/geodata/worldLow.js') }}"></script>
     <script src="{{ asset('admin-assets/lib/4/themes/dataviz.js') }}"></script>
     <script src="{{ asset('admin-assets/lib/4/themes/animated.js') }}"></script>
+    <script src="{{ asset('admin-assets/components/apexcharts-bundle/dist/apexcharts.js') }}"></script>
+    <script src="{{ asset('admin-assets/components/apexcharts-bundle/data.js') }}"></script>
 
     <!-- CrmX Admin App -->
+    <script src="{{ asset('assets/js/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('admin-assets/js/template.js') }}"></script>
     <script src="{{ asset('admin-assets/js/pages/dashboard.js') }}"></script>
     <script src="{{ asset('admin-assets/js/demo.js') }}"></script>
+    <script src="{{ asset('admin-assets/custom/js/script.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    @yield('script')
 </body>
 
 </html>

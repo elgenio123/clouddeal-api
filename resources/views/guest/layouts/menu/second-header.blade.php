@@ -52,12 +52,7 @@
                         <a aria-expanded="false" href="{{ route('home') }}">Home</a>
                     </li>
                     <li class="sidemenu-items">
-                        <a class="has-arrow" aria-expanded="false" href="javascript:void(0);">Best ads </a>
-                        <ul aria-expanded="false">
-                            <li><a href="{{ route('dashboard') }}">Ads</a></li>
-                            <li><a href="{{ route('dashboard.ad-list') }}">My ads</a></li>
-                            <li><a href="{{ route('wishlist') }}">Wishlist</a></li>
-                        </ul>
+                        <a  aria-expanded="false" href="{{ route('dashboard.index') }}">Best ads </a>
                     </li>
                     <li class="sidemenu-items">
                         <a class="has-arrow" aria-expanded="false" href="javascript:void(0);">Categories</a>

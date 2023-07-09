@@ -56,7 +56,7 @@
                                 </ol>
                             </nav>
                         </div>
-                    @else
+                     @elseif(Str::contains(request()->url(), 'towns'))
                         <h3 class="page-title">Towns</h3>
                         <div class="d-inline-block align-items-center">
                             <nav>
@@ -65,6 +65,18 @@
                                     </li>
                                     <li class="breadcrumb-item" aria-current="page">towns</li>
                                     <li class="breadcrumb-item active" aria-current="page">My Towns</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    @else
+                        <h3 class="page-title">Chat App</h3>
+                        <div class="d-inline-block align-items-center">
+                            <nav>
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a>
+                                    </li>
+                                    <li class="breadcrumb-item" aria-current="page">chats</li>
+                                    <li class="breadcrumb-item active" aria-current="page">My Chats</li>
                                 </ol>
                             </nav>
                         </div>

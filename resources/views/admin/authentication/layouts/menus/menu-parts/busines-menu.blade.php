@@ -14,6 +14,12 @@
         <i class="fa fa-money"></i>
         <span>Payments</span></a>
 </li>
+<li>
+    <a href="#">
+    {{-- <a href="{{ route('admin.chat.index') }}"> --}}
+        <i class="fa fa-paper-plane"></i>
+        <span>ChatApp</span></a>
+</li>
 
 <li class="header nav-small-cap">ADMINISTRATION</li>
 <li>

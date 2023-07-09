@@ -17,6 +17,11 @@ class DiscussionController extends Controller
     {
         return view('guest.layouts.pages.chat');
     }
+    public function adminIndex(Request $request)
+    {
+        return view('admin.authentication.layouts.pages.chat');
+    }
+
 
     public function ListDiscussion(Request $request, Annonce $annonce)
     {

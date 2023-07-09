@@ -21,6 +21,7 @@
         background-color: inherit;
         color: #ef4836;
     }
+
 </style>
 <div class="fluid-container">
     <div class="row">
@@ -32,7 +33,7 @@
         </div>
         <div class="col-md-6 col-12">
             <ul class="d-flex account_login-area">
-                <li>
+                {{-- <li>
                     <form>
                         <select id="lang-switch">
                             <option value="en">
@@ -43,8 +44,17 @@
                             </option>
                         </select>
                     </form>
+                </li> --}}
+
+                <li>
+                    <div class="publish">
+                        <a href="{{ route('auth.login') }}"> Login</a>
+                    </div>
                 </li>
-                <li><a href="{{ route('auth.login') }}"> Login/Register </a></li>
+
+
+               
+
                 <div class="publish">
                     <a id="publish-button" href="">Publish</a>
                 </div>

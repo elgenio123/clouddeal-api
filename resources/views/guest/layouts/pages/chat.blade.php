@@ -51,7 +51,7 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-                                    <img  src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">
                                 </a>
                                 <div class="chat-about">
 
@@ -73,8 +73,8 @@
 
                                         <div class="message-data text-right">
                                             <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
-                                            <span class="message-data-time" x-text="formatTimestamp(message.created_at)"></span>
-                                            <span x-show="message.sender === currentUser" class="message-data-time" x-text="formatTimestamp(message.created_at)">12:20</span>
+
+                                            <span x-show="message.sender === currentUser" class="message-data-time" x-text="formatTimestamp(message.created_at)"></span>
                                             <img x-show="message.sender === currentUser" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
 
                                         </div>
@@ -85,9 +85,10 @@
                                         <div class="message other-messages text-right">
                                             <span x-text="message.content">
                                             </span>
+                                            <small><i><span class="message-data-time" x-text="formatTimestamp(message.created_at)"></span></i></small>
                                         </div>
                                     </li>
-{{-- Chat reactive Comment le faire  --}}
+                                    {{-- Chat reactive Comment le faire  --}}
 
                                 </template>
                             </div>

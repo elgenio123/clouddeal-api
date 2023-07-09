@@ -105,6 +105,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::prefix('myletters')->name('letters.')->group(function () {
         Route::get('/', [LetterController::class, 'show'])->name('show');
     });
+
+    Route::prefix('chat')->name('chat.')->group(function () {
+        Route::get('/', [DiscussionController::class, 'adminIndex'])->name('index');
+        Route::get('{annonce}', [DiscussionController::class, 'ListDiscussion']);
+        Route::get('/messages/{discussion}', [DiscussionController::class, 'getMessages']);
+        Route::post('/messages/send/{discussion}', [DiscussionController::class, 'createMessage']);
+    });
 });
 Route::name('auth.')->prefix('auth')->group(function () {
     Route::get('/login', [AuthController::class, 'LoginView'])->name('login');
@@ -177,6 +184,9 @@ Route::name('chat.')->prefix('chat')->group(function () {
     Route::get('{annonce}', [DiscussionController::class, 'ListDiscussion']);
     Route::get('/messages/{discussion}', [DiscussionController::class, 'getMessages']);
     Route::post('/messages/send/{discussion}', [DiscussionController::class, 'createMessage']);
+});
+Route::get('/admin/chat', function(){
+    return view('admin.authentication.layouts.pages.chat');
 });
 
 

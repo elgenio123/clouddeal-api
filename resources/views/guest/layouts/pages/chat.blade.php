@@ -69,7 +69,7 @@
                             <div class="list-message">
                                 <template x-for="message in messages" :key="message.id">
 
-                                    <li class="clearfix" :class="{ 'text-right': message.sender === currentUser, 'text-left': message.sender === !currentUser }">
+                                    <li class="clearfix" :class="{ 'text-right': message.sender === {{ Auth::user()->id }}, 'text-left': message.sender === !currentUser }">
 
                                         <div class="message-data text-right">
                                             <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">

@@ -24,10 +24,15 @@
                             <div class="socials">
                                 <div class="left">
                                     @include('guest.includes.google-auth')
+                                    <div class="google-btn">
+                                        <div class="google-icon-wrapper">
+                                            <img class="google-icon" src="{{ asset('assets/svg/google.png') }}" />
+                                        </div>
+                                            <p class="btn-text"><b>Login with Google</b></p>
+                                    </div>
+
                                 </div>
-                                <div class="right">
-                                    @include('guest.includes.facebook-auth')
-                                </div>
+                               
                             </div>
                             <button type="submit">SIGN IN</button>
                             <div class="text-center">

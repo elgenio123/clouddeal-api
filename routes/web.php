@@ -185,9 +185,9 @@ Route::name('chat.')->prefix('chat')->group(function () {
     Route::get('/messages/{discussion}', [DiscussionController::class, 'getMessages']);
     Route::post('/messages/send/{discussion}', [DiscussionController::class, 'createMessage']);
 });
-Route::get('/admin/chat', function(){
-    return view('admin.authentication.layouts.pages.chat');
-});
+// Route::get('/admin/chat', function(){
+//     return view('admin.authentication.layouts.pages.chat');
+// });
 
 
 //Route::post('/comments/annonces/{id}',[CommentaireController::class, 'store'] )->name('comments.store');

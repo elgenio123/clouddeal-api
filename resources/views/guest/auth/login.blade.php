@@ -18,11 +18,11 @@
                                     <label id="save-password" for="password">Save Password</label>
                                 </div>
                                 <div class="col-lg-6 text-right">
-                                    <a href="{{ route('auth.forgot-password') }}">Forget Your Password?</a>
+                                    <a href="{{ route('auth.password.request') }}">Forget Your Password?</a>
                                 </div>
                             </div>
-                            <div class="socials">
-                                <div class="left">
+                            <div class="socials" id="socials">
+                                <div class="left" id="left">
                                     @include('guest.includes.google-auth')
 
                                 </div>
@@ -38,3 +38,8 @@
         </div>
     </div>
 @endsection
+<style> 
+    #left{
+        width: 60%;
+    }
+</style>

@@ -1,27 +1,29 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Authenticate\AnnonceController;
-use App\Http\Controllers\Authenticate\BoostController;
-use App\Http\Controllers\Authenticate\CategoryController;
-use App\Http\Controllers\Guest\AnnonceGuestController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Guest\HomeController;
-use App\Http\Controllers\Guest\NewsLetterController;
-use App\Http\Controllers\Guest\ContactController;
-use App\Http\Controllers\Authenticate\CommentaireController;
-use App\Http\Controllers\Guest\SignalGuestController;
-
-
-use App\Http\Controllers\Guest\AboutGuestController;
-use App\Http\Controllers\Authenticate\DiscussionController;
-use App\Http\Controllers\Authenticate\PaymentController;
-use App\Http\Controllers\Authenticate\VilleController;
-use App\Http\Controllers\Authenticate\MessageController;
-use App\Http\Controllers\Authenticate\HomeAuthenticateController;
-use App\Http\Controllers\Authenticate\LetterController;
-use App\Http\Controllers\Authenticate\ProfileController;
 use Faker\Guesser\Name;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Guest\HomeController;
+use App\Http\Controllers\Guest\ContactController;
+use App\Http\Controllers\Guest\AboutGuestController;
+use App\Http\Controllers\Guest\NewsLetterController;
+use App\Http\Controllers\Guest\SignalGuestController;
+use App\Http\Controllers\Authenticate\BoostController;
+use App\Http\Controllers\Authenticate\VilleController;
+use App\Http\Controllers\Guest\AnnonceGuestController;
+
+
+use App\Http\Controllers\Authenticate\LetterController;
+use App\Http\Controllers\Authenticate\AnnonceController;
+use App\Http\Controllers\Authenticate\MessageController;
+use App\Http\Controllers\Authenticate\PaymentController;
+use App\Http\Controllers\Authenticate\ProfileController;
+use App\Http\Controllers\Authenticate\CategoryController;
+use App\Http\Controllers\Auth\AuthResetPasswordController;
+use App\Http\Controllers\Auth\AuthForgotPasswordController;
+use App\Http\Controllers\Authenticate\DiscussionController;
+use App\Http\Controllers\Authenticate\CommentaireController;
+use App\Http\Controllers\Authenticate\HomeAuthenticateController;
 
 
 /*
@@ -114,15 +116,22 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         //Route::get('/editpasswdform', [ProfileController::class, 'editPasswdForm'])->name('editPasswdForm');
     });
 });
-
+//150065
 Route::name('auth.')->prefix('auth')->group(function () {
     Route::get('/login', [AuthController::class, 'LoginView'])->name('login');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/register', [AuthController::class, 'RegisterView'])->name('register');
     Route::get('/login/modal', [AuthController::class, 'showLoginModal'])->name('login.modal');
-    Route::get('/forgot-password', function () {
-        return view("guest.auth.forgot-password", ['name' => 'Forgot-password', 'head' => 'Account']);
-    })->name("forgot-password");
+    // reset password
+
+    Route::get('/forgot-password', [AuthForgotPasswordController::class, 'showForgotPasswordForm'])->name('password.request');
+    Route::post('/forgot-password',[AuthForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::get('/reset-password/{token}', [AuthResetPasswordController::class, 'showResetPasswordForm'])->name('password.reset');
+    Route::post('/reset-password', [AuthResetPasswordController::class, 'reset'])->name('password.update');
+
+   // Route::get('/forgot-password', function () {
+        //return view("guest.auth.forgot-password", ['name' => 'Forgot-password', 'head' => 'Account']);
+   // })->name("forgot-password");
     Route::get('/reset-password', function () {
         return view("guest.auth.reset-password", ['name' => 'Reset-password', 'head' => 'Account']);
     })->name("reset-password");
@@ -137,10 +146,11 @@ Route::name('auth.')->prefix('auth')->group(function () {
 
     // Callback après l'authentification Google
     Route::get('/google/callback', [AuthController::class, 'handleGoogleCallback'])->name('google.callback');
-    });
+});
 
+ Route::get('/reset-password/{token}', [AuthResetPasswordController::class, 'showResetPasswordForm'])->name('password.reset');
 
-    Route::prefix('dashboard')->middleware('auth')->group(function () {
+ Route::prefix('dashboard')->middleware('auth')->group(function () {
         Route::get('/', function () {
             return view('user.layouts.partials.dashboard',  ['name' => 'Dashboard',  'head' => 'Dashboard']);
         })->name('dashboard');

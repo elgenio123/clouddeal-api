@@ -128,4 +128,6 @@ class AuthController extends Controller
         // Redirigez l'utilisateur vers la page appropriée après l'authentification
         return redirect()->route('admin.home');
     }
+
+
 }

@@ -31,16 +31,14 @@ class AuthResetPasswordController extends Controller
                     'remember_token' => Str::random(60),
                 ])->save();
 
-                // Vous pouvez également ajouter ici toute logique supplémentaire que vous souhaitez exécuter après la réinitialisation du mot de passe.
-
-                $user->setRememberToken(Str::random(60)); // Réinitialiser le jeton "remember_token" pour se déconnecter de toutes les sessions existantes.
+               $user->setRememberToken(Str::random(60)); // Réinitialiser le jeton "remember_token" pour se déconnecter de toutes les sessions existantes.
 
                 event(new PasswordReset($user));
             }
         );
 
         return $status === Password::PASSWORD_RESET
-            ? redirect()->route('login')->with('status', 'Votre mot de passe a été réinitialisé avec succès.')
+            ? redirect()->route('auth.login')->with('status', 'Votre mot de passe a été réinitialisé avec succès.')
             : redirect()->back()->withErrors(['email' => [__($status)]]);
     }
 }

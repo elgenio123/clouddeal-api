@@ -2,25 +2,30 @@
 
 namespace App\Http\Controllers\Authenticate;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Models\Signal;
 use App\Models\Annonce;
 use App\Models\Comment;
-use App\Models\Signal;
 use App\Models\Boost;
 use App\Models\Enums\PathFileEnum;
 use App\Services\FileUploadService;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\Payment;
 use Illuminate\Support\Facades\Auth;
+use App\Services\StripePaymentService;
 
 class AnnonceController extends Controller
 {
     public function index(Request $request)
     {
         $user = Auth::user();
-        $annonces = Annonce::where('user_id', $user->id)->get();
-        $annonces = Annonce::get();
-        $boosted_ads_id = Boost::pluck('annonce_id')->unique();
-        return view('admin.authentication.layouts.pages.ads.show', compact('annonces', 'boosted_ads_id'));
+        if ($user->is_admin) {
+            $annonces = Annonce::get();
+        } else {
+            $annonces = $user->annonces;
+        }
+        return view('admin.authentication.layouts.pages.ads.show', compact('annonces'));
     }
 
     public function create()
@@ -30,13 +35,14 @@ class AnnonceController extends Controller
 
     public function edit(Annonce $annonce)
     {
-
+        if (auth()->id() != $annonce->user_id) {
+            return back();
+        }
         return view('admin.authentication.layouts.pages.ads.edit', compact('annonce'));
     }
 
     public function store(Request $request)
     {
-        //dd($request->all());
         $request->validate(
             [
                 'name' => 'required|string|max:255',
@@ -57,7 +63,7 @@ class AnnonceController extends Controller
             FileUploadService::uploadMultipleFiles($request->file('images'), $annonce, PathFileEnum::ANNONCE_PATH);
         }
 
-        return redirect()->route('admin.ads.index')->with('message', 'Ad created successfully');
+        return to_route('admin.ads.index')->with('message', 'Ad created successfully');
     }
 
     public function update(Request $request, Annonce $annonce)
@@ -69,7 +75,6 @@ class AnnonceController extends Controller
                 'price' => 'required|numeric|min:0',
                 'description' => 'required',
                 'town_id' => 'required|exists:towns,id',
-                'user_id' => 'required|exists:users,id',
                 'category_id' => 'required|exists:categories,id',
             ]
         );
@@ -82,6 +87,10 @@ class AnnonceController extends Controller
 
     public function verify(Annonce $annonce)
     {
+
+        if (!auth()->user()->is_admin) {
+            return back();
+        }
         $annonce->is_verified = true;
         $annonce->save();
         return redirect()->route('admin.ads.index');
@@ -89,22 +98,31 @@ class AnnonceController extends Controller
 
     public function delete(Annonce $annonce)
     {
-        if ($annonce->user_id != auth()->id()) abort(403);
+        if ($annonce->user_id != auth()->id() && !auth()->user()->is_admin) abort(403);
         $annonce->delete();
         return response()->json(['message', 'Deleted successfully']);
     }
 
-    public function detail($annonce)
+    public function detail(Annonce $annonce)
     {
-        $boost = Boost::where('annonce_id', $annonce)->latest()->first();
-        $ad = Annonce::find($annonce);
-        $comments = Comment::where('annonce_id', '=', $annonce)->get();
-        $signals = Signal::where('annonce_id', '=', $annonce)->get();
-        return view('admin.authentication.layouts.pages.ads.ad-detail', compact('ad', 'comments', 'signals', 'boost'));
+        if (auth()->id() != $annonce->user_id && !auth()->user()->is_admin) {
+            return back();
+        }
+        $boost = $annonce->boosts()->first();
+        return view('admin.authentication.layouts.pages.ads.ad-detail', compact('annonce', 'boost'));
     }
 
-    public function block(Request $request, Annonce $annonce)
+    public function checkout(Annonce $annonce, Payment $price)
     {
+        $stripePaymentService = new StripePaymentService();
+        return $stripePaymentService->generatePaymentUrl($price, $annonce);
+    }
+
+    public function block(Annonce $annonce)
+    {
+        if (!auth()->user()->is_admin) {
+            return back();
+        }
         $annonce->is_blocked = !($annonce->is_blocked);
         $annonce->save();
         return redirect()->back();

@@ -2,34 +2,37 @@
 
 namespace App\Http\Controllers\Authenticate;
 
-use App\Http\Controllers\Controller;
-use Illuminate\View\View;
-use Stripe;
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
 
+use Illuminate\Http\Request;
+use App\Services\StripePaymentService;
+use App\Http\Controllers\Controller;
+use App\Models\Annonce;
+use App\Models\Payment;
 
 class StripePaymentController  extends Controller
 {
-    public function stripe(): View
+    public function success($uuid)
     {
-        return view('stripe');
+        $payment = Payment::where('uuid', $uuid)->firstOrFail();
+        $payment->status = 'APPROVED';
+        $payment->save();
+        if (isset($payment->target->name)) {
+            $annonce =  Annonce::find($payment->target->id);
+        } else {
+            $annonce = Annonce::find($payment->target->annonce->id);
+            $annonce->level += $payment->target->score;
+            $annonce->save();
+        }
+
+        return to_route('admin.ads.detail', $annonce->id);
     }
 
-
-
-    public function stripePost(Request $request): RedirectResponse
+    public function cancel($uuid)
     {
-        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-
-        Stripe\Charge::create ([
-                "amount" => 10 * 100,
-                "currency" => "usd",
-                "source" => $request->stripeToken,
-                "description" => "Test payment from itsolutionstuff.com."
-        ]);
-
-        return back()->with('success', 'Payment successful!');
+        $payment = Payment::where('uuid', $uuid)->firstOrFail();
+        $payment->status = 'CANCELLED';
+        $payment->save();
+        $annonce_id = isset($payment->target->name) ? $payment->target->id : $payment->target->annonce->id;
+        return to_route('admin.ads.detail', $annonce_id);
     }
-
 }

@@ -4,43 +4,43 @@ namespace App\Http\Controllers\Authenticate;
 
 use App\Http\Controllers\Controller;
 use App\Models\Annonce;
+use App\Models\Payment;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        if (auth()->user()->is_admin) {
+            $payments = Payment::all();
+        } else {
+            $user = auth()->user();
+            $payments = $user->payments;
+        }
 
-        $annonces = Annonce::with('user', 'payment', 'boosts')->get();
         $montantTotals = 0;
-
-        foreach ($annonces as $annonce) {
-            if ($annonce->payment && $annonce->payment->status == 'APPROVED') {
-
-                $montantTotals  += $annonce->payment->amount;
+        foreach ($payments as $payment) {
+            if ($payment->status == 'APPROVED') {
+                $montantTotals += $payment->amount;
             }
         }
         $montantTotals = toMoney($montantTotals);
-        return view('admin.authentication.layouts.pages.payment', compact('annonces', 'montantTotals'));
+        return view('admin.authentication.layouts.pages.payment', compact('payments', 'montantTotals'));
     }
 
-    public function approvePayment(Annonce $annonce)
+    public function approvePayment(Payment $payment)
     {
-
-        // Mettre à jour le statut du paiement à APPROVED
-        $annonce->payment->status = 'APPROVED';
-        $annonce->payment->save();
+        $payment->status = 'APPROVED';
+        $payment->save();
 
         return redirect()->back();
     }
 
-    public function cancelPayment(Annonce $annonce)
+    public function cancelPayment(Payment $payment)
     {
-
-        // Mettre à jour le statut du paiement à CANCELLED
-        $annonce->payment->status = 'CANCELLED';
-        $annonce->payment->save();
+        $payment->status = 'CANCELLED';
+        $payment->save();
 
         return redirect()->back();
     }

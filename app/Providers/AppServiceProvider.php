@@ -34,12 +34,11 @@ class AppServiceProvider extends ServiceProvider
             $allTowns = Town::all();
             view()->share('allTowns', $allTowns);
         }
-        if (Schema::hasTable('contacts')) {
+        if (Schema::hasTable('contacts') && Schema::hasColumn('contacts', 'is_read')) {
             $unreadMessageCount = Contact::where('is_read', false)->count();
             view()->share('unreadMessageCount', $unreadMessageCount);
         }
         if (Schema::hasTable('users')) {
-
             view()->composer('*', function ($view) {
                 $user = Auth::user();
                 $view->with('user', $user);

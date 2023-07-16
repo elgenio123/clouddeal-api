@@ -11,51 +11,48 @@
                         <div class="row">
                             <div class="col-md-4 col-sm-6">
                                 <div class="box box-body b-1 text-center no-shadow">
-                                    <img src="{{ asset('assets/images/featured/3.jpg') }}" id="product-image"
-                                        class="img-fluid" alt="">
+                                    <img src="{{ $annonce->image_path }}" class="img-fluid" alt="">
                                 </div>
                                 <div class="pro-photos">
-                                    <div class="photos-item item-active">
-                                        <img src="{{ asset('assets/images/featured/3.jpg') }}" alt="">
-                                    </div>
-                                    <div class="photos-item">
-                                        <img src="{{ asset('assets/images/featured/3.jpg') }}" alt="">
-                                    </div>
-                                    <div class="photos-item">
-                                        <img src="{{ asset('assets/images/featured/3.jpg') }}" alt="">
-                                    </div>
-                                    <div class="photos-item">
-                                        <img src="{{ asset('assets/images/featured/3.jpg') }}" alt="">
-                                    </div>
+                                    @forelse ($annonce->files_path as $files)
+                                        <div class="photos-item item-active">
+                                            <img src="{{ $files->path }}" alt="">
+                                        </div>
+                                    @empty
+                                        <div class="box box-body b-1 text-center no-shadow">
+                                            <img src="{{ $annonce->image_path }}" class="img-fluid" alt="">
+                                        </div>
+                                    @endforelse
+
                                 </div>
                                 <div class="clear"></div>
                             </div>
                             <div class="col-md-8 col-sm-6">
-                                <h2 class="box-title mt-0">{{ $ad->name }}</h2>
+                                <h2 class="box-title mt-0">{{ $annonce->name }}</h2>
                                 @isset($boost)
                                     <p class="d-inline float-right w-95 fs-3">Boosted till <span
                                             class="text-success">{{ $boost->format_date }}</span></p>
                                 @endisset
 
-                                <h1 class="pro-price mb-0 mt-20">{{ $ad->format_price }}
+                                <h1 class="pro-price mb-0 mt-20">{{ $annonce->format_price }}
                                 </h1>
                                 <hr>
-                                <p>{{ $ad->description }}</p>
-                                <div data-ad-id={{ $ad->id }} id="idContainer" style="display: none"></div>
+                                <p>{{ $annonce->description }}</p>
+                                <div data-ad-id={{ $annonce->id }} id="idContainer" style="display: none"></div>
                                 <hr>
                                 <div class="gap-items">
                                     <button data-toggle="modal" data-target="#exampleModalCenter"
                                         class="btn btn-success btn-rounded"><i class="fa fa-rocket"></i> Boost</button>
-                                    <a href="{{ route('admin.ads.edit', ['annonce' => $ad]) }}"
+                                    <a href="{{ route('admin.ads.edit', $annonce->id) }}"
                                         class="btn btn-warning btn-rounded"><i class="fa fa-edit"></i> Edit</a>
                                     <form method="post" onsubmit="event.preventDefault()" style="display: inline">
                                         @csrf
                                         <button type="submit" id="delete-alert" class="btn btn-danger btn-rounded"><i
                                                 class="fa fa-trash"></i> Delete</button>
                                     </form>
-                                    @if ($ad->is_verified == false)
+                                    @if ($annonce->is_verified == false)
                                         <form name="" method="post" style="display: inline"
-                                            action="{{ route('admin.ads.verify', ['annonce' => $ad]) }}">
+                                            action="{{ route('admin.ads.verify', $annonce->id) }}">
                                             @csrf
                                             @method('put')
                                             <button type="submit" class="btn btn-rounded btn-info mb-5">Publish
@@ -63,12 +60,19 @@
                                             </button>
                                         </form>
                                     @endif
+                                    <form action="{{ route('admin.ads.checkout', $annonce->id) }}" method="POST"
+                                        class="d-inline">
+                                        @csrf
+                                        <button type="submit" class="btn btn-rounded btn-info mb-5">checkout
+                                            <i class="fa fa-checkout"></i>
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                             <div class="col-lg-12 col-md-12 col-sm-12">
                                 <h4 class="box-title mt-40 text-success">Comments</h4>
                                 <div class="row">
-                                    @forelse ($comments as $comment)
+                                    @forelse ($annonce->comments as $comment)
                                         <div class="col-md-6 col-8">
                                             <div class="box">
                                                 <div class="box-body">
@@ -91,7 +95,7 @@
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <h4 class="box-title mt-40 text-danger">Signals</h4>
                             <div class="row">
-                                @forelse ($signals as $signal)
+                                @forelse ($annonce->signals as $signal)
                                     <div class="col-md-6 col-8">
                                         <div class="box">
                                             <div class="box-body">
@@ -112,10 +116,14 @@
                             </div>
                         </div>
                     </div>
-                </div>boost
+                </div>
             </div>
         </div>
 
     </section>
 @endsection
 @include('admin.authentication.layouts.pages.modal.modal-boost')
+
+@section('script')
+    <script src="{{ asset('admin-assets/js/pages/ecommerce_details.js') }}"></script>
+@endsection

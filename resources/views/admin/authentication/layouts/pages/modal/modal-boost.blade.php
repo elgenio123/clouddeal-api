@@ -5,13 +5,13 @@
             <div class="modal-header">
                 <h3 class="text-center mb-3">Boost your Ad</h3>
                 <button type="button" class="close d-flex align-items-center justify-content-center"
-                    data-dismiss="modal" aria-label="Close">
+                    data-dismiss="modal" aria-label="Close" id="closed-boost-modal">
                     <span aria-hidden="true" class="ion-ios-close"></span>
                 </button>
             </div>
             <div class="modal-body p-4 py-5 p-md-5">
                 <div class="text-success text-center"><i class="fa fa-rocket fa-5x"></i></div>
-                <form id="boost-form" action="{{ route('admin.ads.boost', ['annonce' => $ad]) }}" method="post"
+                <form id="boost-form" action="{{ route('admin.ads.boost', $annonce->id) }}" method="post"
                     class="signup-form" style="padding: 20px">
                     @csrf
                     @method('PUT')

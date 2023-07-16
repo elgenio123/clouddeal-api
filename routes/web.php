@@ -18,12 +18,8 @@ use App\Http\Controllers\Authenticate\AnnonceController;
 use App\Http\Controllers\Authenticate\MessageController;
 use App\Http\Controllers\Authenticate\PaymentController;
 use App\Http\Controllers\Authenticate\ProfileController;
-use App\Http\Controllers\Authenticate\CategoryController;
-use App\Http\Controllers\Auth\AuthResetPasswordController;
-use App\Http\Controllers\Auth\AuthForgotPasswordController;
-use App\Http\Controllers\Authenticate\DiscussionController;
-use App\Http\Controllers\Authenticate\CommentaireController;
-use App\Http\Controllers\Authenticate\HomeAuthenticateController;
+use App\Http\Controllers\Authenticate\StripePaymentController;
+use Faker\Guesser\Name;
 
 
 /*
@@ -78,6 +74,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::put('/update/{annonce}', [AnnonceController::class, 'update'])->name('update');
         Route::delete('/delete/{annonce}', [AnnonceController::class, 'delete'])->name('delete');
         Route::get('/{annonce}/detail', [AnnonceController::class, 'detail'])->name('detail');
+        Route::post('/{annonce}/checkout', [AnnonceController::class, 'checkout'])->name('checkout');
         Route::put('/block/{annonce}', [AnnonceController::class, 'block'])->name('block');
         Route::put('/boost/{annonce}', [BoostController::class, 'store'])->name('boost');
         Route::put('/verify/{annonce}', [AnnonceController::class, 'verify'])->name('verify');
@@ -93,12 +90,17 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::delete('/delete/{town}', [VilleController::class, 'delete'])->name('delete');
     });
 
-        Route::prefix('mypayments')->name('payments.')->middleware('auth')->group(function () {
-            Route::get('/', [PaymentController::class, 'index'])->name('index');
-            Route::get('/approvePayment/{annonce}', [PaymentController::class, 'approvePayment'])->name('approve');
-            Route::get('/cancelPayment/{annonce}', [PaymentController::class, 'cancelPayment'])->name('cancel');
-        });
+    Route::prefix('mypayments')->name('payments.')->middleware('auth')->group(function () {
+        Route::get('/', [PaymentController::class, 'index'])->name('index');
+        Route::get('/approvePayment/{annonce}', [PaymentController::class, 'approvePayment'])->name('approve');
+        Route::get('/cancelPayment/{annonce}', [PaymentController::class, 'cancelPayment'])->name('cancel');
+    });
 
+
+    Route::name('stripe.')->prefix('stripe')->group(function () {
+        Route::get('/success/{uuid}', [StripePaymentController::class, 'success'])->name('checkout.success');
+        Route::get('/cancel/{uuid}', [StripePaymentController::class, 'cancel'])->name('checkout.cancel');
+    });
 
     Route::prefix('mymessages')->name('messages.')->group(function () {
         Route::get('/', [MessageController::class, 'index'])->name('index');
@@ -137,7 +139,8 @@ Route::name('auth.')->prefix('auth')->group(function () {
     })->name("reset-password");
     Route::get('/verify-email', function () {
         return view("guest.auth.email-verification", ['name' => 'Verify-Email', 'head' => 'Account']);
-    })->name("verify-email");
+    })->name("auth.verify-email");
+
     Route::post('/auth/login', [AuthController::class, 'login'])->name('login.auth');
     Route::post('/register', [AuthController::class, 'store'])->name('register.auth');
 
@@ -155,31 +158,35 @@ Route::name('auth.')->prefix('auth')->group(function () {
             return view('user.layouts.partials.dashboard',  ['name' => 'Dashboard',  'head' => 'Dashboard']);
         })->name('dashboard');
 
-        Route::get('/ad-list', function () {
-            return view('user.layouts.partials.ad-list',  ['name' => 'Ad List',  'head' => 'Dashboard']);
-        })->name('dashboard.ad-list');
-    });
+Route::prefix('dashboard')->middleware('auth')->group(function () {
+    Route::get('/', function () {
+        return view('user.layouts.partials.dashboard',  ['name' => 'Dashboard',  'head' => 'Dashboard']);
+    })->name('dashboard');
+
+    Route::get('/ad-list', function () {
+        return view('user.layouts.partials.ad-list',  ['name' => 'Ad List',  'head' => 'Dashboard']);
+    })->name('dashboard.ad-list');
+});
 
 
 
 
-    Route::get('/wishlist', function () {
-        return view('user.layouts.partials.wishlist',  ['name' => 'Wishlist',  'head' => 'Wishlist']);
-    })->name('wishlist');
+Route::get('/wishlist', function () {
+    return view('user.layouts.partials.wishlist',  ['name' => 'Wishlist',  'head' => 'Wishlist']);
+})->name('wishlist');
 
 
-    Route::name('chat.')->prefix('chat')->middleware('auth')->group(function () {
-        Route::get('/', [DiscussionController::class, 'index'])->name('index');
-        Route::get('{annonce}', [DiscussionController::class, 'ListDiscussion']);
-        Route::get('/messages/{discussion}', [DiscussionController::class, 'getMessages']);
-        Route::post('/messages/send/{discussion}', [DiscussionController::class, 'createMessage']);
+Route::name('chat.')->prefix('chat')->middleware('auth')->group(function () {
+    Route::get('/', [DiscussionController::class, 'index'])->name('index');
+    Route::get('{annonce}', [DiscussionController::class, 'ListDiscussion']);
+    Route::get('/messages/{discussion}', [DiscussionController::class, 'getMessages']);
+    Route::post('/messages/send/{discussion}', [DiscussionController::class, 'createMessage']);
+});
 
-    });
 
-
-    //Route::post('/comments/annonces/{id}',[CommentaireController::class, 'store'] )->name('comments.store');
-    Route::post('/annonces/{id}/signaler', [SignalGuestController::class, 'signaleAnnonce'])->middleware('auth')->name('annonces.signaler');
-    Route::get('/comments/{id}', [CommentaireController::class, 'listcomment']);
-    Route::post('/comments/comment/{ad}',[CommentaireController::class, 'store'])->name('comments.store');
+//Route::post('/comments/annonces/{id}',[CommentaireController::class, 'store'] )->name('comments.store');
+Route::post('/annonces/{id}/signaler', [SignalGuestController::class, 'signaleAnnonce'])->middleware('auth')->name('annonces.signaler');
+Route::get('/comments/{id}', [CommentaireController::class, 'listcomment']);
+Route::post('/comments/comment/{ad}', [CommentaireController::class, 'store'])->name('comments.store');
 
     //laravel gate

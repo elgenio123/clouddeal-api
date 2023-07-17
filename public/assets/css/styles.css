@@ -2061,6 +2061,7 @@ margin-left: 15px;
 .post-img {
     float: left;
     margin-right: 20px;
+    width: 100%;
 }
 
 .post-content {

@@ -10,7 +10,7 @@
             <div class="mr-auto">
                 <h3 class="page-title br-0">Dashboard</h3>
             </div>
-            <div class="right-title w-170">
+            {{-- <div class="right-title w-170">
                 <span class="subheader_daterange font-weight-600" id="dashboard_daterangepicker">
                     <span class="subheader_daterange-label">
                         <span class="subheader_daterange-title"></span>
@@ -20,7 +20,7 @@
                         <i class="fa fa-angle-down"></i>
                     </a>
                 </span>
-            </div>
+            </div> --}}
         </div>
     </div>
 

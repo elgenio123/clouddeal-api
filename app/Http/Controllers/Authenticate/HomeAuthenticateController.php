@@ -20,15 +20,18 @@ class HomeAuthenticateController extends Controller
 
         $startDate = Carbon::now()->subWeek();
         $endDate = Carbon::now();
-        $pastWeekRevenue = Payment::whereBetween('created_at', [$startDate, $endDate])->sum('amount');
+        $pastWeekRevenue = Payment::whereBetween('created_at', [$startDate, $endDate])
+        ->where('status', 'APPROVED')
+        ->sum('amount');
 
         $boostedAdsIds = Boost::pluck('annonce_id')->unique();
         $boostRevenue = Payment::where('target_type', Boost::class)
             ->whereBetween('created_at', [$startDate, $endDate])
+            ->where('status', 'APPROVED')
             ->sum('amount');
-        $totalBoostRevenue = Payment::where('target_type', Annonce::class)->sum('amount');
+        $totalBoostRevenue = Payment::where('status', 'APPROVED')->where('target_type', Boost::class)->sum('amount');
 
-        $totalRevenue = Payment::sum('amount');
+        $totalRevenue = Payment::where('status', 'APPROVED')->sum('amount');
         $pendingOrders = Payment::where('status', 'PENDING')->count();
 
 

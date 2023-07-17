@@ -25,7 +25,7 @@
                                     @endguest
                                     @auth
                                         <li><a :href="ad.url_to_ad_detail"><i class="fa fa-eye"></i></a></li>
-                                        <li><a href="{{ route('chat.index') }}"><i class="fa fa-send"></i></a></li>
+                                        <li><a target="_blank" href="https://wa.me/691586487"><i class="fa fa-send"></i></a></li>
 
                                     @endauth
 

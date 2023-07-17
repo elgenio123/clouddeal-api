@@ -42,11 +42,11 @@
             <ul class="d-flex account_login-area">
                 @guest
                     <li><a href="{{ route('auth.login') }}">Login/Register</a></li>
-                    <li>
+                    {{-- <li>
                         <div class="publish">
                             <a id="publish-button" href="">Publish</a>
                         </div>
-                    </li>
+                    </li> --}}
                 @endguest
                 @auth
                     <li>

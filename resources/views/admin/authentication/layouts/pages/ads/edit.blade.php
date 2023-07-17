@@ -11,7 +11,7 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-12">
-                    <form method="POST"  name='edit-form' enctype="multipart/form-data">
+                    <form method="POST" name='edit-form' enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-12" >

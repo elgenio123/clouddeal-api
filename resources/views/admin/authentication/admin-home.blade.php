@@ -10,7 +10,7 @@
             <div class="mr-auto">
                 <h3 class="page-title br-0">Dashboard</h3>
             </div>
-            <div class="right-title w-170">
+            {{-- <div class="right-title w-170">
                 <span class="subheader_daterange font-weight-600" id="dashboard_daterangepicker">
                     <span class="subheader_daterange-label">
                         <span class="subheader_daterange-title"></span>
@@ -20,7 +20,7 @@
                         <i class="fa fa-angle-down"></i>
                     </a>
                 </span>
-            </div>
+            </div> --}}
         </div>
     </div>
 
@@ -144,11 +144,7 @@
             <div class="box">
                 <div class="box-header">
                     <h4 class="box-title">Revenue</h4>
-                    <div class="box-controls pull-right">
-                        <span class="badge-pill badge-light px-10">Year</span>
-                        <span class="badge-pill badge-light px-10 mx-10">Day</span>
-                        <span class="badge-pill badge-primary px-10">Month</span>
-                    </div>
+
                 </div>
                 <div class="box-body">
                     <div class="chart">

@@ -170,58 +170,60 @@ $("document").ready(function () {
             error.insertAfter(element);
         },
         submitHandler: function (form) {
-            event.preventDefault();
-            var formData = new FormData(form);
-            formData.append("_method", "PUT");
+             event.preventDefault();
+            // var formData = new FormData(form);
+            // formData.append("_method", "PUT");
 
-            swal(
-                {
-                    title: "Are you sure?",
-                    text: "Your modifications will be applied",
-                    type: "info",
-                    showCancelButton: true,
-                    confirmButtonColor: "#006BDD",
-                    confirmButtonText: "Yes, Update it!",
-                    cancelButtonText: "No, cancel plx!",
-                    closeOnConfirm: false,
-                    closeOnCancel: false,
-                },
-                function (isConfirm) {
-                    var id = $("#idContainer").attr("data-ad-id");
-                    var csrfToken = $('input[name="_token"]').val();
-                    if (isConfirm) {
-                        fetch("/admin/myads/update/" + id, {
-                            method: "POST",
-                            headers: {
-                                "X-CSRF-TOKEN": csrfToken,
-                            },
-                            body: formData,
-                        })
-                            .then((response) => response.json())
-                            .then((data) => {
-                                swal(
-                                    {
-                                        title: "Updated!",
-                                        text: data.message,
-                                        type: "success",
-                                        showCancelButton: false,
-                                        confirmButtonColor: "#006BDD",
-                                        confirmButtonText: "OK",
-                                    },
-                                    function (isConfirm) {
-                                        window.location.href = "/admin/myads";
-                                    }
-                                );
-                            })
-                            .catch((error) => {
-                                swal("Cancelled", error, "error");
-                                console.error(error);
-                            });
-                    } else {
-                        swal("Cancelled", "No modification applied", "error");
-                    }
-                }
-            );
+            // swal(
+            //     {
+            //         title: "Are you sure?",
+            //         text: "Your modifications will be applied",
+            //         type: "info",
+            //         showCancelButton: true,
+            //         confirmButtonColor: "#006BDD",
+            //         confirmButtonText: "Yes, Update it!",
+            //         cancelButtonText: "No, cancel plx!",
+            //         closeOnConfirm: false,
+            //         closeOnCancel: false,
+            //     },
+            //     function (isConfirm) {
+            //         var id = $("#idContainer").attr("data-ad-id");
+            //         var csrfToken = $('input[name="_token"]').val();
+            //         if (isConfirm) {
+            //             fetch("/admin/myads/update/" + id, {
+            //                 method: "POST",
+            //                 headers: {
+            //                     "X-CSRF-TOKEN": csrfToken,
+            //                 },
+            //                 body: formData,
+            //             })
+            //                 .then((response) => response.json())
+            //                 .then((data) => {
+            //                     swal(
+            //                         {
+            //                             title: "Updated!",
+            //                             text: data.message,
+            //                             type: "success",
+            //                             showCancelButton: false,
+            //                             confirmButtonColor: "#006BDD",
+            //                             confirmButtonText: "OK",
+            //                         },
+            //                         function (isConfirm) {
+            //                             window.location.href = "/admin/myads";
+            //                         }
+            //                     );
+            //                 })
+            //                 .catch((error) => {
+            //                     swal("Cancelled", error, "error");
+            //                     console.error(error);
+            //                 });
+            //         } else {
+            //             swal("Cancelled", "No modification applied", "error");
+            //         }
+            //     }
+            // );
+            console.log('hello');
+            form.submit();
         },
     });
 
@@ -294,6 +296,36 @@ $("document").ready(function () {
             //     });
             form.submit()
         },
+    });
+    $('#delete-alert').click(function(){
+        console.log('hello');
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover this file!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#FF6B55",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+        }, function(){
+            var id = $('#idContainer').attr('data-ad-id');
+            var csrfToken = $('input[name="_token"]').val();
+            $.ajax({
+                url: "/admin/myads/delete/"+id,
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                success: function(response){
+                    swal("Deleted!", response.message, "success");
+                    window.location.href = "/admin/myads";
+                },
+                error: function(xhr, status, error){
+                    swal("Cancelled", "An error ocurred", "error");
+                }
+            })
+
+        });
     });
 });
 window.addEventListener("alpine:init", () => {

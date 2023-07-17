@@ -13,10 +13,10 @@
         <span>Towns</span>
     </a>
 </li>
-<li>
+{{-- <li>
     <a href="{{ route('admin.letters.show') }}">
 
         <i class="fas fa-file-alt"></i>
         <span>Letters</span>
     </a>
-</li>
+</li> --}}

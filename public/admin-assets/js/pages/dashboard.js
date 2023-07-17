@@ -123,7 +123,7 @@ $(function () {
           "margin": "10px 25px 70px 46px"
         },
         "scale-y": {
-          "values": "0:50000:500",
+          "values": "0:200:20",
           "line-color": "none",
           "guide": {
             "line-style": "solid",

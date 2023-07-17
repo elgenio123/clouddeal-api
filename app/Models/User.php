@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
 
@@ -30,7 +31,9 @@ class User extends Authenticatable
         'address',
         'sex',
         'is_admin',
-        'location'
+        'location',
+        'pseudo',
+        'image'
     ];
 
 
@@ -84,10 +87,8 @@ class User extends Authenticatable
 
 
     public function getImageProfileAttribute() //: MorphMany
-    {/*
-        $file = File::where('target_id', $this->id)->where('target_type', User::class)->first();
-        $file->path = str_replace('public', 'storage', $file->path);
-        return $file; */
+    {
+        return url(str_replace('public', 'storage', $this->image));
     }
 
     function payments(): HasMany

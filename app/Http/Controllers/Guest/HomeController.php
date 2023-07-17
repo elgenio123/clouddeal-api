@@ -16,7 +16,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {
 
-        $ads = Annonce::where('is_blocked', false)->orderBy('level', 'DESC')->take(4)->get();
+        $ads = Annonce::where('is_blocked', false)->where('is_verified', true)->orderBy('level', 'DESC')->take(4)->get();
         $categories = Category::inRandomOrder()->take(5)->get();
         return view('guest.home', compact('ads', 'categories'));
     }
@@ -24,7 +24,7 @@ class HomeController extends Controller
     public function paginatedAds(Request $request)
     {
         $perpage = $request->get('per_page', 8);
-        $allAds = Annonce::where('is_blocked', false)->orderBy('level', 'DESC')->paginate($perpage);
+        $allAds = Annonce::where('is_blocked', false)->where('is_verified', true)->orderBy('level', 'DESC')->paginate($perpage);
         return response()->json(["allAds" => $allAds]);
     }
 }

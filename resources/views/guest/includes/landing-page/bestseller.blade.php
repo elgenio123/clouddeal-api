@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-12">
             <div class="section-title">
-                <h2>Best Seller</h2>
+                <h2>Best Ads</h2>
                 <img src="assets/images/section-title.png" alt="">
             </div>
         </div>
@@ -19,7 +19,7 @@
                                 <li>
                                 <li><a href="{{ route('dashboard.singe-ad', ['id' => $ad->id]) }}"><i
                                             class="fa fa-eye"></i></a></li>
-                                <li><a href="{{ route('chat.index') }}"><i class="fa fa-send"></i></a></li>
+                                <li><a href="https://wa.me/691586487" target="_blank"><i class="fa fa-send"></i></a></li>
                             </ul>
                         </div>
                     </div>

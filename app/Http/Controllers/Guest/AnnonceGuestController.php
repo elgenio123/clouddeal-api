@@ -46,7 +46,7 @@ class AnnonceGuestController extends Controller
                 break;
         }
 
-        $annonces = $query->where('name', 'LIKE', $search)->where('is_blocked', false)->where('is_verified', false)->orderByDesc('level')->paginate($limit);
+        $annonces = $query->where('name', 'LIKE', $search)->where('is_blocked', false)->where('is_verified', true)->orderByDesc('level')->paginate($limit);
         return response()->json([ 'annonces' => $annonces, 'BestAds' => $BestAds ]);
     }
 

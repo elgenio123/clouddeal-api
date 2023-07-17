@@ -36,7 +36,7 @@ class AnnonceController extends Controller
     public function edit(Annonce $annonce)
     {
         if (auth()->id() != $annonce->user_id) {
-            return back();
+            return back()->with('message', "You don't have edit privileges on this ad");
         }
         return view('admin.authentication.layouts.pages.ads.edit', compact('annonce'));
     }
@@ -112,11 +112,7 @@ class AnnonceController extends Controller
         return view('admin.authentication.layouts.pages.ads.ad-detail', compact('annonce', 'boost'));
     }
 
-    public function checkout(Annonce $annonce, Payment $price)
-    {
-        $stripePaymentService = new StripePaymentService();
-        return $stripePaymentService->generatePaymentUrl($price, $annonce);
-    }
+
 
     public function block(Annonce $annonce)
     {

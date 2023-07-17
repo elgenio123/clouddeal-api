@@ -47,7 +47,7 @@
                                         class="btn btn-warning btn-rounded"><i class="fa fa-edit"></i> Edit</a>
                                     <form method="post" onsubmit="event.preventDefault()" style="display: inline">
                                         @csrf
-                                        <button type="submit" id="delete-alert" class="btn btn-danger btn-rounded"><i
+                                        <button id="delete-alert" class="btn btn-danger btn-rounded"><i
                                                 class="fa fa-trash"></i> Delete</button>
                                     </form>
                                     @if ($annonce->is_verified == false)
@@ -60,13 +60,7 @@
                                             </button>
                                         </form>
                                     @endif
-                                    <form action="{{ route('admin.ads.checkout', $annonce->id) }}" method="POST"
-                                        class="d-inline">
-                                        @csrf
-                                        <button type="submit" class="btn btn-rounded btn-info mb-5">checkout
-                                            <i class="fa fa-checkout"></i>
-                                        </button>
-                                    </form>
+
                                 </div>
                             </div>
                             <div class="col-lg-12 col-md-12 col-sm-12">

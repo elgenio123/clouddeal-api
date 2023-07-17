@@ -14,45 +14,34 @@ class RegionSeeder extends Seeder
     public function run(): void
     {
         Region::create([
-            'name' => "ouest",
-
+            'name' => "Nord",
         ]);
         Region::create([
-            'name' => " nord ouest",
-
+            'name' => "Extreme Nord",
         ]);
         Region::create([
-            'name' => "sud ouest",
-
+            'name' => "Sud",
         ]);
         Region::create([
-            'name' => "est",
-
+            'name' => "Sud Ouest",
         ]);
         Region::create([
-            'name' => "sud",
-
-        ]);
-        Region::create([
-            'name' => "centre",
-
+            'name' => "Adamaoua",
         ]);
         Region::create([
             'name' => "littoral",
-
         ]);
         Region::create([
-            'name' => "adamaoua",
-
+            'name' => "Centre",
         ]);
         Region::create([
-            'name' => "extreme nord",
-
+            'name' => "Est",
         ]);
         Region::create([
-            'name' => "nord",
-
+            'name' => "Ouest",
         ]);
-
+        Region::create([
+            'name' => "Nord Ouest",
+        ]);
     }
 }

@@ -29,14 +29,14 @@
 
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="User">
-                        <img src='{{ asset('assets/images/Apropos/vane1.jpg') }}' class="user-image rounded-circle"
+                        <img src='{{ Auth::user()->image_profile }}' class="user-image rounded-circle"
                             alt="User Image">
                     </a>
                     <ul class="dropdown-menu animated flipInX">
                         <!-- User image -->
                         <li class="user-header bg-img" data-overlay="3">
                             <div class="flexbox align-self-center">
-                                <img src='{{ asset('assets/images/Apropos/vane1.jpg') }}'
+                                <img src='{{ Auth::user()->image_profile }}'
                                     class="float-left rounded-circle" alt="User Image">
                                 <h4 class="user-name align-self-center">
 

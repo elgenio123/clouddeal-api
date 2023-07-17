@@ -1251,6 +1251,7 @@ header-area start
     -webkit-transform: scale(1.2);
     -moz-transform: scale(1.2);
     zoom: 1;
+    height: 300px;
 }
 
 .product-wrap:hover .product-img img {

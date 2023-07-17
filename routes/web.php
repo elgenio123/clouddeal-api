@@ -18,8 +18,14 @@ use App\Http\Controllers\Authenticate\AnnonceController;
 use App\Http\Controllers\Authenticate\MessageController;
 use App\Http\Controllers\Authenticate\PaymentController;
 use App\Http\Controllers\Authenticate\ProfileController;
+use App\Http\Controllers\Authenticate\CategoryController;
+use App\Http\Controllers\Auth\AuthResetPasswordController;
+use App\Http\Controllers\Auth\AuthForgotPasswordController;
+use App\Http\Controllers\Authenticate\DiscussionController;
+use App\Http\Controllers\Authenticate\CommentaireController;
 use App\Http\Controllers\Authenticate\StripePaymentController;
-use Faker\Guesser\Name;
+use App\Http\Controllers\Authenticate\HomeAuthenticateController;
+
 
 
 /*
@@ -157,6 +163,7 @@ Route::name('auth.')->prefix('auth')->group(function () {
         Route::get('/', function () {
             return view('user.layouts.partials.dashboard',  ['name' => 'Dashboard',  'head' => 'Dashboard']);
         })->name('dashboard');
+    });
 
 Route::prefix('dashboard')->middleware('auth')->group(function () {
     Route::get('/', function () {
@@ -186,7 +193,9 @@ Route::name('chat.')->prefix('chat')->middleware('auth')->group(function () {
 
 //Route::post('/comments/annonces/{id}',[CommentaireController::class, 'store'] )->name('comments.store');
 Route::post('/annonces/{id}/signaler', [SignalGuestController::class, 'signaleAnnonce'])->middleware('auth')->name('annonces.signaler');
-Route::get('/comments/{id}', [CommentaireController::class, 'listcomment']);
+Route::post('/comments/{id}', [CommentaireController::class, 'listcomment']);
 Route::post('/comments/comment/{ad}', [CommentaireController::class, 'store'])->name('comments.store');
 
     //laravel gate
+
+

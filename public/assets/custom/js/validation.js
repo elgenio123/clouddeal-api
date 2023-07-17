@@ -180,6 +180,15 @@
             pseudo: {
                 required: true,
                 minlength:5,
+            },
+            image: {
+                required: true,
+            },
+            phone: {
+                number: true,
+                required: true,
+                maxlength: 9,
+                minlength: 9
             }
         },
         messages: {
@@ -202,6 +211,11 @@
             pseudo: {
                 required: "Field can't be empty",
                 minlength: "Must be atleast 5 characters"
+            },
+            phone: {
+                number: 'Can only contain numbers',
+                maxlength: 'Phone should be of length 9',
+                minlength: 'Phone should be of length 9',
             }
 
         },

@@ -64,4 +64,5 @@
         var input = document.querySelector("#phone");
         window.intlTelInput(input);
     </script>
+    <script src="{{asset('assets/custom/js/validation.js')}}"></script>
 @endsection

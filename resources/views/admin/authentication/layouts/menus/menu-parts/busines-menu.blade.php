@@ -15,12 +15,15 @@
         <span>My Ads</span>
     </a>
 </li>
+
 <li>
     <a href="{{ route('admin.payments.index') }}">
         <i class="fa fa-money"></i>
         <span>Payments</span></a>
 </li>
 
+    
+@if (Auth::user()->is_admin)
 <li>
     <a href="{{ route('admin.messages.index') }}">
 
@@ -33,3 +36,4 @@
         <span class="messages-text">Messages</span>
     </a>
 </li>
+@endif

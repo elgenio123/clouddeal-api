@@ -8,7 +8,7 @@
             </a>
         </div>
         <div class="profile-pic">
-            <img src='{{ asset('assets/images/Apropos/vane1.jpg') }}' class="rounded-circle" alt="user">
+            <img src='{{ Auth::user()->image_profile }}' class="rounded-circle" alt="user">
 
             <div class="profile-info">
                 <h4>{{ $user->name }}</h4>

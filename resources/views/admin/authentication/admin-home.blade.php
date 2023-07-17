@@ -144,11 +144,7 @@
             <div class="box">
                 <div class="box-header">
                     <h4 class="box-title">Revenue</h4>
-                    <div class="box-controls pull-right">
-                        <span class="badge-pill badge-light px-10">Year</span>
-                        <span class="badge-pill badge-light px-10 mx-10">Day</span>
-                        <span class="badge-pill badge-primary px-10">Month</span>
-                    </div>
+
                 </div>
                 <div class="box-body">
                     <div class="chart">

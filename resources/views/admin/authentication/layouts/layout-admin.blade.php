@@ -76,7 +76,10 @@
 
     <script src="{{ asset('admin-assets/components/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('admin-assets/js/pages/editor.js') }}"></script>
-
+    <script src="{{ asset('admin-assets/components/datatable/datatables.min.js') }}"></script>
+    <script src="{{ asset('admin-assets/js/pages/data-table.js') }}"></script>
+    <script src="{{ asset('admin-assets/components/sweetalert/sweetalert.min.js') }}"></script>
+    
 
     @yield('script')
 </body>

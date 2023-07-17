@@ -25,10 +25,11 @@ class HomeAuthenticateController extends Controller
         $boostedAdsIds = Boost::pluck('annonce_id')->unique();
         $boostRevenue = Payment::where('target_type', Boost::class)
             ->whereBetween('created_at', [$startDate, $endDate])
+            ->where('status', 'APPROVED')
             ->sum('amount');
-        $totalBoostRevenue = Payment::where('target_type', Annonce::class)->sum('amount');
+        $totalBoostRevenue = Payment::where('status', 'APPROVED')->where('target_type', Annonce::class)->sum('amount');
 
-        $totalRevenue = Payment::sum('amount');
+        $totalRevenue = Payment::where('status', 'APPROVED')->sum('amount');
         $pendingOrders = Payment::where('status', 'PENDING')->count();
 
 

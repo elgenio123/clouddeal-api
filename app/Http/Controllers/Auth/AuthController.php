@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Enums\PathFileEnum;
 use App\Models\User;
+use App\Services\FileUploadService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -22,7 +24,9 @@ class AuthController extends Controller
                 [
                     'name' => 'required',
                     'email' => 'required|email|unique:users,email',
-                    'password' => 'required'
+                    'password' => 'required',
+                    'image' => 'required|file',
+                    'pseudo'=> 'required'
                 ]
             );
 
@@ -30,13 +34,16 @@ class AuthController extends Controller
                 return redirect()->route('auth.register');
             }
 
+            $image =FileUploadService::uploadPath($request->file('image'), PathFileEnum::PROFILE_PATH);
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => Hash::make($request->password)
+                'password' => Hash::make($request->password),
+                'image' => $image,
+                'pseudo' => $request->pseudo
             ]);
 
-            return redirect()->route('auth.login');
+            return view('guest.auth.login');
         } catch (\Throwable $th) {
             return redirect()->route('auth.register')->with(['message' => "Une erreur s\'est produit lors de l\inscription"]);
         }
@@ -65,7 +72,7 @@ class AuthController extends Controller
 
             $user = User::where('email', $request->email)->first();
 
-            return  view('guest.layouts.pages.all-ads');
+            return  redirect()->route('dashboard.index');
             // return view('admin.authentication.admin-home');
         } catch (\Throwable $th) {
             return redirect()->route('auth.login')->with(['message' => "Une erreur s\'est produit lors de la connexion"]);
@@ -79,7 +86,7 @@ class AuthController extends Controller
 
         Auth::logout(); // Déconnexion de l'utilisateur en cours
 
-        return  view('guest.layouts.pages.all-ads'); // Redirection vers la page d'accueil ou une autre page appropriée après la déconnexion
+        return  redirect()->route('dashboard.index'); // Redirection vers la page d'accueil ou une autre page appropriée après la déconnexion
     }
 
     public function LoginView(Request $request)
@@ -118,7 +125,8 @@ class AuthController extends Controller
             $newUser = User::create([
                 'name' => $user->name,
                 'email' => $user->email,
-                'password' => Hash::make(Str::random(16)) // Générez un mot de passe aléatoire
+                'password' => Hash::make(Str::random(16)),
+                'pseudo' => 'pseudo' // Générez un mot de passe aléatoire
             ]);
 
             // Connectez le nouvel utilisateur

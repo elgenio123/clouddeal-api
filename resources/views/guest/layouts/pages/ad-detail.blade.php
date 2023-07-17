@@ -5,6 +5,7 @@
     <div class="modal fade" id="exampleModalCenter" tabindex="-1">
         @include('guest.includes.modal')
     </div>
+
     <div class="single-product-area ptb-100" x-data="commentView" x-init ="fetchComment()">
         <div class="container">
             <div class="row">
@@ -60,10 +61,10 @@
                         </div>
                         <p>{{ $ad->description }}</p>
                         <ul class="input-style">
-                            <li class="contact-seller"><a href="{{ route('chat.index') }}">Contact seller</a>  </li>
+                            <li class="contact-seller"><a href="https://wa.me/691586487" target="_blank">Contact seller</a>  </li>
                             <li class="signal-ad">
                             <button type="button" @click="open = true" id="btnform" data-toggle="modal" data-target="#exampleModalCenter">
-							  signaler
+							  signal
 							</button>
                             </li>
                             <li>
@@ -81,14 +82,18 @@
 
                         <ul class="socil-icon">
                             <li>Share :</li>
-                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="https://facebook.com" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="https://twitter.com" target="_blank"><i class="fa fa-twitter"></i></a></li>
                         </ul>
-
+                        <div class="d-flex flex-column">
+                            <h4>Informations on seller</h4>
+                            <ul class="d-flex flex-column">
+                                <li>Name : {{ $ad->user->name }}</li>
+                                <li>Email : {{ $ad->user->email }}</li>
+                            </ul>
+                        </div>
                         @include('guest.includes.commentlist')
+
                     </div>
                 </div>
             </div>

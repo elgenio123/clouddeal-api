@@ -127,11 +127,8 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="profile-img">
-                                <img src="{{ asset('assets/images/Apropos/vane1.jpg') }}" alt="" />
-                                <div class="file btn  btn-primary">
-                                    Change Photo
-                                    <input type="file" name="file" />
-                                </div>
+                                <img src="{{ Auth::user()->image_profile }}" alt="" />
+                                
                             </div>
                         </div>
 

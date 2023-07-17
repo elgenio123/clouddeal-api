@@ -13,7 +13,7 @@
                     <div class="featured-product-wrap">
 
                         <div class="featured-product-img">
-                            <img src="{{ asset('assets/images/product/4.jpg') }}" alt="">
+                            <img src="{{$annonce->image_path }}" alt="">
                         </div>
                         <div class="featured-product-content">
                             <div class="row">
